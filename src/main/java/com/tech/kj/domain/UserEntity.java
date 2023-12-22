@@ -1,13 +1,12 @@
 package com.tech.kj.domain;
 
 import com.tech.kj.domain.types.UserStatus;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Builder
@@ -20,10 +19,10 @@ public class UserEntity extends BaseEntity {
     private String lastName;
     private String middleName;
 
-    @OneToMany(mappedBy = "user")
-    private List<ContactEntity> contacts;
-    @OneToMany(mappedBy = "user")
-    private List<EmailEntity> emails;
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    private Set<ContactEntity> contacts = new HashSet<>();
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    private Set<EmailEntity> emails = new HashSet<>();
 
     @Column(unique = true)
     private String userName;
@@ -33,6 +32,7 @@ public class UserEntity extends BaseEntity {
     @Column(unique = true)
     private String thirdPartyAccessToken;
 
+    @Enumerated(EnumType.STRING)
     private UserStatus userStatus;
 
     private boolean isDeleted = false;
