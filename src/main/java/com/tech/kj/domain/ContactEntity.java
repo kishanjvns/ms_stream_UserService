@@ -1,11 +1,10 @@
 package com.tech.kj.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
+@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,6 +16,7 @@ public class ContactEntity extends BaseEntity{
     private boolean isPrimary;
 
     private boolean isVerified;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(referencedColumnName = "id",name = "fkContact")
     private UserEntity user;
 }

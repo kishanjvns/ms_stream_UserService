@@ -1,20 +1,17 @@
 package com.tech.kj.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.*;
+import org.hibernate.type.SqlTypes;
+import org.hibernate.type.descriptor.jdbc.VarcharJdbcType;
+import org.hibernate.usertype.UserType;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @MappedSuperclass
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
@@ -22,9 +19,8 @@ import java.util.UUID;
 public class BaseEntity {
 
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     @Column(updatable = false)
     private String createdBy;
