@@ -15,7 +15,19 @@
 	<description>ms_stream_User service</description>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.tech.kj</groupId>
+			<artifactId>ms_stream_util</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
+
+
 
 	<build>
 
