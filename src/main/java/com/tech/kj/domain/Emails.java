@@ -11,7 +11,7 @@ import lombok.*;
 @AllArgsConstructor
 @Setter
 @Getter
-public class EmailEntity  extends BaseEntity{
+public class Emails extends BaseEntity{
     @Column(unique = true)
     private String email;
     private boolean isPrimary;
@@ -19,7 +19,7 @@ public class EmailEntity  extends BaseEntity{
     private boolean isVerified;
 
     @ManyToOne
-    private UserEntity user;
+    private Users user;
 
 
 }

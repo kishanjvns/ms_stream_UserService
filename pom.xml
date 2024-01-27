@@ -6,11 +6,19 @@
 		<groupId>com.tech.kj</groupId>
 		<artifactId>ms_stream_dependencies_bom</artifactId>
 		<version>1.0</version>
+		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.tech.kj</groupId>
 	<artifactId>ms_stream_UserService</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>ms_stream_UserService</name>
 	<description>ms_stream_User service</description>
+
+	<dependencies>
+	</dependencies>
+
+	<build>
+
+	</build>
 
 </project>

@@ -1,11 +1,9 @@
 package com.tech.kj.domain;
 
-import com.tech.kj.domain.types.UserStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -14,28 +12,31 @@ import java.util.Set;
 @AllArgsConstructor
 @Setter
 @Getter
-public class UserEntity extends BaseEntity {
+public class Users extends BaseEntity{
     private String firstName;
     private String lastName;
     private String middleName;
 
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
-    private Set<ContactEntity> contacts = new HashSet<>();
+    private Set<Contacts> contacts = new HashSet<>();
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
-    private Set<EmailEntity> emails = new HashSet<>();
+    private Set<Emails> emails = new HashSet<>();
 
     @Column(unique = true)
     private String userName;
 
     private String password;
 
-    @Column(unique = true)
-    private String thirdPartyAccessToken;
-
-    @Enumerated(EnumType.STRING)
-    private UserStatus userStatus;
-
     private boolean isDeleted = false;
 
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "USER_ROLES",
+            joinColumns = {
+                    @JoinColumn(name = "USER_ID")
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "ROLE_ID") })
+    private Set<Roles> roles;
 
 }

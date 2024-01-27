@@ -11,12 +11,12 @@ import lombok.*;
 @AllArgsConstructor
 @Setter
 @Getter
-public class ContactEntity extends BaseEntity{
+public class Contacts extends BaseEntity{
     @Column(unique = true)
     private String contact;
     private boolean isPrimary;
 
     private boolean isVerified;
     @ManyToOne
-    private UserEntity user;
+    private Users user;
 }

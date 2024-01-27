@@ -1,9 +1,8 @@
 package com.tech.kj.bootstrap;
 
-import com.tech.kj.domain.ContactEntity;
-import com.tech.kj.domain.EmailEntity;
-import com.tech.kj.domain.UserEntity;
-import com.tech.kj.domain.types.UserStatus;
+import com.tech.kj.domain.Contacts;
+import com.tech.kj.domain.Emails;
+import com.tech.kj.domain.Users;
 import com.tech.kj.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
@@ -21,30 +20,29 @@ public class AppBootstrap implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         log.info("bootstrap started");
-        seedUserEntity();
+        //seedUserEntity();
     }
     public void seedUserEntity(){
         for(int i=0; i < 5; i++){
-           UserEntity userEntity = createUserEntityInstance(i);
-           UserEntity savedEntity = userRepository.save(userEntity);
+           Users userEntity = createUserEntityInstance(i);
+           Users savedEntity = userRepository.save(userEntity);
            log.info("user saved with id: {}",savedEntity.getId());
         }
     }
-    public UserEntity createUserEntityInstance(int recordCount){
-        return  UserEntity.builder()
+    public Users createUserEntityInstance(int recordCount){
+        return  Users.builder()
                 .firstName("Kishan")
                 .lastName("jaiswal")
                 .userName("abc"+recordCount)
                 .password("password")
-                .userStatus(UserStatus.INIT)
                 .isDeleted(false)
-                .emails(Set.of(EmailEntity.builder()
+                .emails(Set.of(Emails.builder()
                         .email(String.format("abc%d@gmail.com",recordCount))
                         .isPrimary(true)
                         //TODO take isVerified from request, in future
                         .isVerified(true)
                         .build()))
-                .contacts(Set.of(ContactEntity.builder()
+                .contacts(Set.of(Contacts.builder()
                         .contact("12345678"+recordCount)
                         .isPrimary(true)
                         .isVerified(true)

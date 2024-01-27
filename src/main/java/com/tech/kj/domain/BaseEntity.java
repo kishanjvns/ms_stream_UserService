@@ -2,12 +2,8 @@ package com.tech.kj.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @MappedSuperclass
 @Data
@@ -16,18 +12,11 @@ import java.util.UUID;
 @Setter
 @Getter
 public class BaseEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    @Column(updatable = false)
-    private String createdBy;
-    private String updatedBy;
+    private long id;
 
     @Column(updatable = false)
-    @CreationTimestamp
-    private LocalDateTime createdTime;
-
-    @UpdateTimestamp
-    private LocalDateTime lastModifiedDate;
+    private LocalDateTime createdDate;
+    private LocalDateTime lastModified;
 }
