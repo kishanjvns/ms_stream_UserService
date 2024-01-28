@@ -1,5 +1,6 @@
 package com.tech.kj.config.security;
 
+import com.tech.kj.CommonConstant;
 import com.tech.kj.JwtFilter;
 import com.tech.kj.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,8 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @EnableMethodSecurity
 @RequiredArgsConstructor
 public class WebSecurityConfig implements WebMvcConfigurer {
-    private static final String[] WHITE_LIST_URL = {"/users/api/v1/auth/**"};
+
+    //actuator/info
     private final JwtFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
     private final JwtTokenProvider jwtTokenProvider;
@@ -38,19 +40,20 @@ public class WebSecurityConfig implements WebMvcConfigurer {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
        return http
                 .authorizeHttpRequests(req ->
-                        req.requestMatchers(WHITE_LIST_URL)
+                        req.requestMatchers(CommonConstant.WHITE_LIST_URL)
                                 .permitAll()
                                 .requestMatchers("/users/api/v1/**").hasAnyRole("USER","ADMIN")
                                 .anyRequest()
                                 .authenticated()
                 )
                 .csrf(csrf -> {
-                    csrf.ignoringRequestMatchers(WHITE_LIST_URL);
+                    csrf.ignoringRequestMatchers(CommonConstant.WHITE_LIST_URL);
                 })
                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
 
-                .exceptionHandling(config-> config.accessDeniedHandler(accessDeniedHandler).authenticationEntryPoint(authenticationEntryPoint)).build();
+                //.exceptionHandling(config-> config.accessDeniedHandler(accessDeniedHandler).authenticationEntryPoint(authenticationEntryPoint))
+               .build();
     }
 
     @Bean
