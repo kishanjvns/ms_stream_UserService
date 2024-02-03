@@ -44,11 +44,7 @@
 			</exclusions>
 		</dependency>
 	</dependencies>
-
-
-
 	<build>
-
 	</build>
 
 </project>
