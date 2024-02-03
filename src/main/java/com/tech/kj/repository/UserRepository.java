@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
-public interface UserRepository extends JpaRepository<Users,Long> {
+public interface UserRepository extends JpaRepository<Users,String> {
     @Query("select u from Users u inner join fetch u.emails e where e.email=:email ")
     Optional<Users> fetchedByEmail(@Param("email") String email);
 
