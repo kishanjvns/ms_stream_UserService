@@ -4,6 +4,7 @@ import com.tech.kj.domain.Users;
 import com.tech.kj.domain.mapper.UserEntityMapper;
 import com.tech.kj.exception.ApplicationConstant;
 import com.tech.kj.exception.RecordAlreadyExistException;
+import com.tech.kj.exception.RecordNotFoundException;
 import com.tech.kj.repository.ContactRepository;
 import com.tech.kj.repository.EmailRepository;
 import com.tech.kj.repository.UserRepository;
@@ -49,6 +50,6 @@ public class UserServiceImpl implements UserService{
         if(usersOptional.isPresent()){
             return mapper.entityToDto(usersOptional.get());
         }
-        throw new RuntimeException("404 user not found");
+        throw new RecordNotFoundException(ApplicationConstant.ERR_NOT_FOUND,ApplicationConstant.ERR_NOT_FOUND_MSG);
     }
 }
