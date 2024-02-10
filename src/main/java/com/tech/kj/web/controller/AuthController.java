@@ -1,7 +1,10 @@
 package com.tech.kj.web.controller;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tech.kj.service.LoginService;
+import com.tech.kj.service.LogoutService;
 import com.tech.kj.service.MessageProducer;
 import com.tech.kj.service.UserService;
 import com.tech.kj.web.dto.JwtAccessTokenResponse;
@@ -16,6 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/users/api/v1/auth")
@@ -24,9 +29,10 @@ import java.net.URI;
 public class AuthController {
     private final UserService userService;
     private final LoginService loginService;
-    private final MessageProducer messageProducer;
-    @Value("${kafka.topicName.gateway}")
-    private String topicGateway;
+    private final LogoutService logoutService;
+
+
+
 
     @PostMapping("/login")
     public ResponseEntity<JwtAccessTokenResponse> login(@RequestBody LoginDto loginDto) {
@@ -36,9 +42,9 @@ public class AuthController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity logout(@RequestHeader("Authorization") String authheader) {
+    public ResponseEntity logout(@RequestHeader("Authorization") String authheader) throws JsonProcessingException {
         log.info("API /logout invoked with {}", authheader);
-        messageProducer.publish(topicGateway,authheader.substring(7));
+        logoutService.logout(authheader.substring(7));
         return ResponseEntity.ok().build();
     }
     @Transactional
@@ -49,4 +55,5 @@ public class AuthController {
         userService.save(request);
         return ResponseEntity.created(URI.create("/api/v1/auth/login")).build();
     }
+
 }
